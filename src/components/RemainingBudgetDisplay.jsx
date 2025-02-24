@@ -1,9 +1,11 @@
-function RemainingBudgetDisplay({ calculation, fixedExpenses }) {
+import PropTypes from 'prop-types';
+
+function RemainingBudgetDisplay({ calculation, fixedExpenses, onDeleteExpense }) {
   const { remainingTotal, dailyBudget, mealsPerDay } = calculation;
 
   return (
-    <div className="mt-6 p-6 bg-white rounded-lg shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold mb-4 text-gray-700">📊 สรุปค่าใช้จ่าย</h2>
+    <div className="bg-gray-50 p-4 rounded-lg space-y-2">
+      <h2 className="text-lg font-semibold text-gray-700">📈 Summary</h2>
       
       <div className="space-y-4">
         <div>
@@ -19,7 +21,7 @@ function RemainingBudgetDisplay({ calculation, fixedExpenses }) {
               <div className="flex items-center space-x-4">
                 <span className="text-gray-600">{expense.amount.toFixed(2)} บาท</span>
                 <button
-                  onClick={() => handleDeleteExpense(expense.id)}
+                  onClick={() => onDeleteExpense(expense.id)}
                   className="text-red-500 hover:text-red-600 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -33,7 +35,7 @@ function RemainingBudgetDisplay({ calculation, fixedExpenses }) {
 
         <div className="border-t pt-4 space-y-3">
           <div className="flex justify-between items-center py-1">
-            <span className="text-gray-600">เงินคงเหลือหลังหักค่าใช้จ่าย:</span>
+            <span className="text-gray-600">หลังหักค่าใช้จ่าย เหลือ:</span>
             <span className="font-semibold text-blue-600 text-lg">{remainingTotal.toFixed(2)} บาท</span>
           </div>
           <div className="flex justify-between items-center py-1">
@@ -49,5 +51,11 @@ function RemainingBudgetDisplay({ calculation, fixedExpenses }) {
     </div>
   );
 }
+
+RemainingBudgetDisplay.propTypes = {
+  calculation: PropTypes.object.isRequired,
+  fixedExpenses: PropTypes.array.isRequired,
+  onDeleteExpense: PropTypes.func.isRequired
+};
 
 export default RemainingBudgetDisplay; 
